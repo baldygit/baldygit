@@ -1,0 +1,240 @@
+=head3	2012-01-05
+
+http://www.iu.hio.no/~mark/CTutorial/CTutorial.html#Preface
+
+to
+
+http://www.iu.hio.no/~mark/CTutorial/CTutorial.html#Operating%20systems
+
+
+
+=head3	2012-01-06
+
+http://www.network-theory.co.uk/docs/gccintro/gccintro_82.html
+
+
+Script started on Fri 06 Jan 2012 04:17:03 PM GMT
+smcgeeve@ubuntu:~/proj/code$ pwd
+/home/smcgeeve/proj/code
+smcgeeve@ubuntu:~/proj/code$ ls -l
+total 40
+-rw-r--r-- 1 smcgeeve users  111 2012-01-06 16:04 hello.c
+-rw-r--r-- 1 smcgeeve users  244 2012-01-06 15:37 log.txt
+-rwxr-xr-x 1 smcgeeve users 7235 2012-01-05 16:13 poem
+-rw-r--r-- 1 smcgeeve users  660 2012-01-05 16:13 poem.c
+-rwxr-xr-x 1 smcgeeve users 7167 2012-01-05 16:20 printstring
+-rw-r--r-- 1 smcgeeve users  202 2012-01-05 16:20 printstring.c
+
+
+# PREPROCESS C source / headers / macros
+smcgeeve@ubuntu:~/proj/code$ cpp    hello.c	-o hello.i
+
+
+# COMPILE preprocessed source to assembler
+smcgeeve@ubuntu:~/proj/code$ gcc -S hello.i	-o hello.s
+
+
+# ASSEMBLE to produce unlinked object file
+smcgeeve@ubuntu:~/proj/code$ as     hello.s	-o hello.o
+
+
+# LINK object file(s) to produce native executable
+smcgeeve@ubuntu:~/proj/code$ gcc    hello.o	-o hello
+
+
+smcgeeve@ubuntu:~/proj/code$ ls -lrt
+total 76
+-rwxr-xr-x 1 smcgeeve users  7159 2012-01-05 14:54 hello
+-rw-r--r-- 1 smcgeeve users   660 2012-01-05 16:13 poem.c
+-rwxr-xr-x 1 smcgeeve users  7235 2012-01-05 16:13 poem
+-rw-r--r-- 1 smcgeeve users   202 2012-01-05 16:20 printstring.c
+-rwxr-xr-x 1 smcgeeve users  7167 2012-01-05 16:20 printstring
+-rw-r--r-- 1 smcgeeve users   244 2012-01-06 15:37 log.txt
+-rw-r--r-- 1 smcgeeve users   111 2012-01-06 16:04 hello.c
+-rw-r--r-- 1 smcgeeve users 17599 2012-01-06 16:17 hello.i
+-rw-r--r-- 1 smcgeeve users   491 2012-01-06 16:17 hello.s
+-rw-r--r-- 1 smcgeeve users  1028 2012-01-06 16:17 hello.o
+-rwxr-xr-x 1 smcgeeve users  7159 2012-01-06 16:17 hello
+
+smcgeeve@ubuntu:~/proj/code$ file hello*; file a.out
+hello:   ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.15, not stripped
+hello.c: ASCII C program text
+hello.i: ASCII C program text
+hello.o: ELF 32-bit LSB relocatable, Intel 80386, version 1 (SYSV), not stripped
+hello.s: ASCII assembler program text
+hello: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.15, not stripped
+smcgeeve@ubuntu:~/proj/code$ exit
+exit
+
+
+
+http://www.network-theory.co.uk/docs/gccintro/gccintro_82.html
+
+http://www.iu.hio.no/~mark/CTutorial/CTutorial.html#Libraries
+
+
+
+smcgeeve@ubuntu:~/proj/code$ cat count.c
+/* 2012-01-05:	~/proj/code/count.c	*/
+
+#include <stdio.h>
+#include <math.h>
+
+main() {
+
+	double x, y;
+
+	printf( "Hello World!\n" );
+	y = sin (x);
+	printf( "Maths library ready!\n" );
+	
+	return 0;
+
+}
+smcgeeve@ubuntu:~/proj/code$ gcc count.c -o count -lm	# NOTE -lm AT END!!!
+smcgeeve@ubuntu:~/proj/code$ ./count
+Hello World!
+Maths library ready!
+
+
+# http://c-faq.com/fp/libm.html
+
+
+
+smcgeeve@ubuntu:~/proj/code$ cat dummy.c
+/* 2012-01-05:	~/proj/code/dummy.c	*/
+
+#include <stdio.h>
+
+dummy() {
+
+}
+
+main() {
+
+	printf( "Calling dummy() !\n" );
+	dummy();
+	printf( "Called dummy() !\n" );
+
+	return 0;
+
+}
+smcgeeve@ubuntu:~/proj/code$ gcc dummy.c -o dummy
+smcgeeve@ubuntu:~/proj/code$ ./dummy
+Calling dummy() !
+Called dummy() !
+
+
+
+=head3	2012-01-07
+
+
+smcgeeve@ubuntu:~/proj/code$ cpp -M hello.c -o hello.m
+smcgeeve@ubuntu:~/proj/code$ cat hello.m
+hello.o: hello.c /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6.1/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/types.h 
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h 
+ /usr/lib/gcc/i686-linux-gnu/4.6.1/include/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h
+
+
+=head4	http://www.iu.hio.no/~mark/CTutorial/CTutorial.html#Programming%20style
+
+
+smcgeeve@ubuntu:~/proj/code$ cat skeleton.c
+/*	2012-01-07:	~/proj/code/skeleton.c	*/
+
+#include <stdio.h>
+#include "myfile.c"	/*	generic local source	*/
+
+#define	SCREAM		"arghhhhh"
+#define	NUMBER_OF_BONES	123
+
+
+main () {
+
+	int	a, b;	/*	declare local vars	*/
+	int	simple;	/*	name a local variable	*/
+
+	printf( "\n" );
+
+	a = random();
+	printf( "\tToday's randum number is %d \n", a);
+
+	b = function1();	/*	assign return val to local var */
+	printf( "\tCalled function1 \n" );
+
+	simple = function2(a,1);	/*	just call and return */
+	printf( "\tAdding 1 to our random number gives %d \n", simple );
+
+	printf( "\n" );
+
+}
+
+
+int function1 () {
+
+	/* do nothing */
+
+}
+
+int function2 (a, b) {
+
+	int	c;		/*	get sum of inputs	*/
+
+	c = a + b;		/*	do something simple	*/
+
+	return c;		/*	would really return somthing */
+
+}
+smcgeeve@ubuntu:~/proj/code$ gcc skeleton.c -o skeleton
+smcgeeve@ubuntu:~/proj/code$ ./skeleton
+
+	Today's randum number is 1804289383 
+	Called function1 
+	Adding 1 to our random number gives 1804289384 
+
+
+=head4	http://www.iu.hio.no/~mark/CTutorial/CTutorial.html#Comments
+
+Failing to terminate comments produces (sometimes misleading) errors:
+
+smcgeeve@ubuntu:~/proj/code$ head skeleton.c
+/*	2012-01-07:	~/proj/code/skeleton.c	*/
+
+/* system headers / libraries */
+#include <stdio.h>
+
+/* local headers / libraries
+#include "myfile.c"
+
+#define	SCREAM		"arghhhhh"
+#define	NUMBER_OF_BONES	123
+
+# cpp doesn't detect unterminated comment above
+smcgeeve@ubuntu:~/proj/code$ cpp skeleton.c -o skeleton.i
+
+# but gcc does - without any precise report of the faulty comment
+smcgeeve@ubuntu:~/proj/code$ gcc -S skeleton.i -o skeleton.s
+skeleton.c:19:10: error: expected declaration specifiers or ‘...’ before string constant
+skeleton.c:21:2: warning: data definition has no type or storage class [enabled by default]
+skeleton.c:21:2: error: initializer element is not constant
+skeleton.c:22:10: error: expected declaration specifiers or ‘...’ before string constant
+skeleton.c:22:46: error: expected declaration specifiers or ‘...’ before ‘a’
+skeleton.c:25:2: warning: data definition has no type or storage class [enabled by default]
+skeleton.c:25:2: error: initializer element is not constant
+skeleton.c:26:10: error: expected declaration specifiers or ‘...’ before string constant
+skeleton.c:29:2: warning: data definition has no type or storage class [enabled by default]
+skeleton.c:29:2: error: initializer element is not constant
+skeleton.c:30:10: error: expected declaration specifiers or ‘...’ before string constant
+skeleton.c:30:57: error: expected declaration specifiers or ‘...’ before ‘simple’
+skeleton.c:32:10: error: expected declaration specifiers or ‘...’ before string constant
+skeleton.c:34:1: error: expected identifier or ‘(’ before ‘}’ token
