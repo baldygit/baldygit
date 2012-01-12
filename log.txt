@@ -222,7 +222,7 @@ smcgeeve@ubuntu:~/proj/code$ head skeleton.c
 # cpp doesn't detect unterminated comment above
 smcgeeve@ubuntu:~/proj/code$ cpp skeleton.c -o skeleton.i
 
-# but gcc does - without any precise report of the faulty comment
+# but gcc does - without any precise report of the faulty comment's location
 smcgeeve@ubuntu:~/proj/code$ gcc -S skeleton.i -o skeleton.s
 skeleton.c:19:10: error: expected declaration specifiers or ‘...’ before string constant
 skeleton.c:21:2: warning: data definition has no type or storage class [enabled by default]
@@ -238,3 +238,215 @@ skeleton.c:30:10: error: expected declaration specifiers or ‘...’ before str
 skeleton.c:30:57: error: expected declaration specifiers or ‘...’ before ‘simple’
 skeleton.c:32:10: error: expected declaration specifiers or ‘...’ before string constant
 skeleton.c:34:1: error: expected identifier or ‘(’ before ‘}’ token
+
+
+
+
+=head3	2012-01-10
+
+github.org:/baldygit == ~/proj/baldygit
+
+http://www.iu.hio.no/~mark/CTutorial/CTutorial.html#Functions
+
+
+bash-3.2$ cat addtwoint.c
+/*	2012-01-10:	~/proj/code/addtwoint.c	*/
+
+/* system headers / libraries */
+#include <stdio.h>
+
+/* local headers / libraries */
+#include "myfile.c"
+
+#define	SCREAM		"arghhhhh"
+#define	NUMBER_OF_BONES	123
+
+
+main () {
+
+	/* define global vars */
+	int	a = 1, b = 2, result = 0;
+
+	printf( "\n" );
+
+	printf( "\tBefore calling function, result is %d\n", result );
+
+	/* call function with global arguments, 
+	   assign local return value to caller's global variable */
+	result = addtwoint( a, b); 
+
+	printf( "\tAfter calling function, the result of %d plus %d is %d\n", a, b, result);
+
+	printf( "\n" );
+
+}
+
+
+int addtwoint (int a, int b) {
+
+	/* local sum of inputs */
+	int	c;
+
+	c = a + b;
+
+	return c;
+
+}
+bash-3.2$ gcc addtwoint.c -o addtwoint; ./addtwoint
+
+	Before calling function, result is 0
+	After calling function, the result of 1 plus 2 is 3
+
+
+
+
+bash-3.2$ cat level.c
+/*	2012-01-10:	~/proj/baldygit/level.c	*/
+
+/* system headers / libraries */
+#include <stdio.h>
+
+/* local headers / libraries */
+#include "myfile.c"
+
+#define	SCREAM		"arghhhhh"
+#define	NUMBER_OF_BONES	123
+
+/* *** level 0 *** */
+
+main () {
+
+	/* define global vars */
+	int	a = 1, b = 2, result = 0;
+
+	printf( "\n" );
+
+	printf( "\tThis is level 0: the main program\n");
+	printf( "\tAbout to go down to level 1 \n");
+
+	DownOne();
+
+	printf( "\tReturned from level 1 to level 0, and exiting!\n" );
+
+	printf( "\n" );
+
+}
+
+
+int DownOne () {
+
+	/* local vars */
+
+	printf( "\n" );
+	printf( "\tEntered level 1 \n" );
+
+	printf( "\tIn level 1, calling level 2, branch left \n");
+	DownLeft( 2 );
+	printf( "\tIn level 1, Calling level 2, branch right \n" );
+	DownRight( 2 ); 
+
+	printf( "\tIn level 1, returning back up to level 0 \n");
+
+}
+
+
+DownLeft (int a) {
+
+	/* local vars */
+
+	printf( "\n" );
+	printf( "\tEntered level %d, branch left\n", a);
+	printf( "\tReturning to the calling function ... \n");
+	printf( "\n" );
+
+}
+
+
+DownRight (int b) {
+
+	/* local vars */
+
+	printf( "\n" );
+	printf( "\tEntered level %d, branch right\n", b);
+	printf( "\tReturning to the calling function ... \n" );
+	printf( "\n" );
+
+}
+bash-3.2$ gcc level.c -o level
+bash-3.2$ ./level
+
+	This is level 0: the main program
+	About to go down to level 1 
+
+	Entered level 1 
+	In level 1, calling level 2, branch left 
+
+	Entered level 2, branch left
+	Returning to the calling function ... 
+
+	In level 1, Calling level 2, branch right 
+
+	Entered level 2, branch right
+	Returning to the calling function ... 
+
+	In level 1, returning back up to level 0 
+	Returned from level 1 to level 0, and exiting!
+
+
+
+=head3	2012-01-12
+
+http://www.iu.hio.no/~mark/CTutorial/CTutorial.html#FunctionsWithValues
+
+
+bash-3.2$ cat rechnung.c
+/*	2012-01-10:	~/proj/code/rechnung.c	*/
+
+/* system headers, libraries */
+#include <stdio.h>
+
+/* local headers, libraries */
+#include "myfile.c"
+
+#define	SCREAM		"arghhhhh"
+#define	NUMBER_OF_BONES	123
+
+
+main () {
+
+	/* define global vars */
+	int	starter = 1, main = 2, dessert = 3, total = 0;
+
+	printf( "\n" );
+
+	total = rechnung( starter, main, dessert ); 
+
+	printf( "\n" );
+
+}
+
+
+int rechnung (int starter, int main, int dessert) {
+
+	/* local sum of inputs */
+	int	bill = 0;
+
+	printf( "\tStarter is %d\n", starter );
+	printf( "\tMain is %d\n", main );
+	printf( "\tDessert is %d\n", dessert );
+
+	bill = starter + main + dessert;
+	printf( "\tBill is %d\n", bill );
+
+	return bill;
+
+}
+bash-3.2$ gcc rechnung.c -o rechnung; ./rechnung
+
+	Starter is 1
+	Main is 2
+	Dessert is 3
+	Bill is 6
+
+
+
