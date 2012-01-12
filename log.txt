@@ -450,3 +450,134 @@ bash-3.2$ gcc rechnung.c -o rechnung; ./rechnung
 
 
 
+bash-3.2$ cat product.c
+/*	2012-01-12:	~/proj/code/product.c	*/
+
+/* system headers, libraries */
+#include <stdio.h>
+
+/* local headers, libraries */
+#include "myfile.c"
+
+#define	SCREAM		"arghhhhh"
+#define	NUMBER_OF_BONES	123
+
+
+main () {
+
+	/* define global vars */
+	int	sean = 47, ruthanne = 55, total = 0;
+
+	printf( "\n" );
+
+	total = product( sean, ruthanne ); 
+	printf( "\tThe product of ages is %d\n", total );
+
+	printf( "\n" );
+
+}
+
+
+int product (int sean, int ruthanne ) {
+
+	/* local product of inputs */
+	int	combined = 0;
+
+	printf( "\tSean is %d\n", sean );
+	printf( "\tRuth Anne is %d\n", ruthanne );
+
+	combined = sean * ruthanne; 
+
+	return combined;
+
+}
+bash-3.2$ gcc product.c -o product; ./product
+
+	Sean is 47
+	Ruth Anne is 55
+	The product of ages is 2585
+
+
+
+http://www.iu.hio.no/~mark/CTutorial/CTutorial.html#Breaking%20out%20early
+
+# The statement 'return' can be used to terminate execution 
+# at any arbitrary point in a function, including main.  
+# It can also be used to return a value or status either to 
+# the callling function or to the environment, if called within main().
+
+
+http://www.iu.hio.no/~mark/CTutorial/CTutorial.html#The%20exit%20function
+
+bash-3.2$ cat earlyexit.c
+/*	2012-01-12:	~/proj/code/early.c	*/
+
+/* system headers, libraries */
+#include <stdio.h>
+/* FAQ: include to resolve errors about exit() */
+#include <stdlib.h>
+
+/* local headers, libraries */
+#include "myfile.c"
+
+#define	SCREAM		"arghhhhh"
+#define	NUMBER_OF_BONES	123
+
+/* local function prototypes: return-type function-name (param-type param-name, ...) */
+int early ( int name1, int name2 );
+
+
+main ( int argc, char *argv[] ) {
+
+	/* define global vars */
+	int status = 0;
+	int	sean = 47, ruthanne = 55, total = 0;
+
+	printf( "\n" );
+
+	printf( "\tThe ages of Sean and Ruth Anne, before calling the early function, are %d and %d\n", sean, ruthanne );
+	total = early( sean, ruthanne ); 
+	printf( "\tThe early of the ages of Sean, %d and Ruth Anne, %d is %d\n", sean, ruthanne, total );
+
+	printf( "\n" );
+
+	/* K&R p.26 recommends returning status to environment */
+	return status;
+
+}
+
+
+int early (int sean, int ruthanne ) {
+
+	/* local early of inputs */
+	int	combined = 0;
+
+	printf( "\tSean is %d\n", sean );
+	printf( "\tRuth Anne is %d\n", ruthanne );
+
+	printf( "\tTerminate execution & clean up early: combined is %d\n", combined );
+	exit (0); 
+
+	combined = sean * ruthanne; 
+
+	return combined;
+
+}
+
+bash-3.2$ gcc earlyexit.c -o earlyexit; ./earlyexit
+
+	The ages of Sean and Ruth Anne, before calling the early function, are 47 and 55
+	Sean is 47
+	Ruth Anne is 55
+	Terminate execution & clean up early: combined is 0
+
+
+
+
+http://www.iu.hio.no/~mark/CTutorial/CTutorial.html#Functions%20and%20types
+
+
+http://www.iu.hio.no/~mark/CTutorial/CTutorial.html#Variables
+
+
+http://www.iu.hio.no/~mark/CTutorial/CTutorial.html#Types
