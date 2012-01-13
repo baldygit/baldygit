@@ -581,3 +581,129 @@ http://www.iu.hio.no/~mark/CTutorial/CTutorial.html#Variables
 
 
 http://www.iu.hio.no/~mark/CTutorial/CTutorial.html#Types
+
+
+
+=head3	2012-01-13
+
+http://www.iu.hio.no/~mark/CTutorial/CTutorial.html#Types
+
+bash-3.2$ cat types.c; gcc types.c -o types; ./types
+
+/*	2012-01-13:	~/proj/code/types.c	*/
+
+/* system headers, libraries */
+#include <stdio.h>
+#include <stdlib.h>
+
+
+/* local headers, libraries */
+#include "myfile.c"
+
+
+/* local macros */
+#define	SCREAM		"arghhhhh"
+#define	NUMBER_OF_BONES	123
+
+
+/* local function prototypes: return-type function-name (param-type param-name, ...) */
+int	types ( int name1, int name2 );
+
+
+/* global variables */
+int 	elapsed = 0;
+float	pie = 3.142;
+
+
+main ( int argc, char *argv[] ) {
+
+	/* define global vars */
+	int	status = 0;
+	int	sean = 47, ruthanne = 55, total = 0;
+
+	/* single ascii characters use single quotes */
+	char	alpha = 'a';
+	char	beta = 'b';
+
+	printf( "\n" );
+
+	printf( "\tSingle ASCII characters alpha - %c, and beta - %c\n", alpha, beta );
+
+	printf( "\n" );
+
+	/* K&R p.26 recommends returning status to environment */
+	return status;
+
+}
+
+bash-3.2$ gcc types.c -o types; ./types
+
+	Single ASCII characters alpha - a, and beta - b
+	The ages of Sean and Ruth Anne, before calling the types function, are 47 and 55
+	Sean is 47
+	Ruth Anne is 55
+	Terminate execution & clean up types: combined is 0
+
+
+
+bash-3.2$ cat specials.c; gcc specials.c -o specials; ./specials
+
+/*	2012-01-13:	~/proj/code/specials.c	*/
+
+
+/* system headers, libraries */
+#include <stdio.h>
+#include <stdlib.h>
+
+
+/* local headers, libraries */
+#include "myfile.c"
+
+
+/* local macros */
+#define	SCREAM		"arghhhhh"
+#define	NUMBER_OF_BONES	123
+
+
+/* local function prototype: return-type function-name (param-type param-name, ...) */
+int	specials ( int name1, int name2 );
+
+
+/* global variables */
+int 	elapsed = 0;
+float	pie = 3.142;
+
+
+main ( int argc, char *argv[] ) {
+
+	/* define global vars */
+	int status = 0;
+
+	/* single ascii characters use single quotes */
+	char	alpha = 'a';
+	char	beta = 'b';
+
+	printf( "\n" );
+	printf( "\tSingle ASCII characters alpha - %c, and beta - %c\n", alpha, beta );
+
+	printf( "\n" );
+	printf( "\tBeep! \7 \n" );
+	printf( "\tch = \'a\' \n" );
+	printf( "\t<- Start of this line - carriage return without line feed  \r" );
+
+	/* K&R p.26 recommends returning status to environment */
+	return status;
+
+}
+
+
+bash-3.2$ gcc specials.c -o specials; ./specials
+
+	Single ASCII characters alpha - a, and beta - b
+
+	Beep!  
+	ch = 'a' 
+	bash-3.2$ <- Start of this line - carriage return without line feed 
+
+
+
